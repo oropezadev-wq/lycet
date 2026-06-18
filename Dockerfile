@@ -75,7 +75,8 @@ COPY --from=build-env /app .
 COPY --from=pdf-bin /bin/wkhtmltopdf /usr/bin/
 COPY docker/config/* $PHP_INI_DIR/conf.d/
 COPY docker/docker-entrypoint.sh .
-RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
+RUN cp tests/Resources/* data/ && \
+    mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
     php bin/console cache:clear && \
     chmod -R 755 ./data
 
